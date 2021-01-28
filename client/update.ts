@@ -1,19 +1,21 @@
+import * as streamBox from 'streambox-collection'
 import { ServiceError } from 'grpc'
 import { User } from '../typedefs/users_pb'
 import { client } from './client'
 
 function updateUser() {
-  return new Promise<User.AsObject>((resolve, reject) => {
-    const requestBody = new User()
-    requestBody.setId(1)
-    requestBody.setName('aldi khan')
-    requestBody.setAge(25)
+	const requestBody = new User()
+	requestBody.setId(1)
+	requestBody.setName('samsul rizal')
+	requestBody.setAge(25)
 
-    client.updateUser(requestBody, (error: ServiceError, response: User) => {
-      if (error) reject(error)
-      resolve(response.toObject())
-    })
-  })
+	client.updateUser(requestBody, (error: ServiceError, response: User) => {
+		if (error) console.error(error)
+		streamBox
+			.object(response.toObject())
+			.then((res) => console.log(streamBox.toObject(res)))
+			.catch(console.error)
+	})
 }
 
-updateUser().then((res) => console.log(res))
+updateUser()

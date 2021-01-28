@@ -1,15 +1,19 @@
+import * as streamBox from 'streambox-collection'
 import { User, Empty } from '../typedefs/users_pb'
 import { client } from './client'
 
-function getUsers() {
-  return new Promise<User[]>((resolve, reject) => {
-    const stream = client.getUsers(new Empty())
-    const users: User[] = []
+function resultsUser() {
+	const stream = client.getUsers(new Empty())
+	const users: User[] = []
 
-    stream.on('data', (user) => users.push(user.toObject()))
-    stream.on('error', reject)
-    stream.on('end', () => resolve(users))
-  })
+	stream.on('data', (user) => users.push(user.toObject()))
+	stream.on('error', console.error)
+	stream.on('end', () => {
+		streamBox
+			.array(users)
+			.then((res) => console.log(streamBox.toArray(res)))
+			.catch(console.error)
+	})
 }
 
-getUsers().then((res) => console.log(res))
+resultsUser()

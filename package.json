@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "google-protobuf": "^3.14.0",
-    "grpc": "^1.24.4"
+    "grpc": "^1.24.4",
+    "streambox-collection": "0.0.2-rc"
   },
   "scripts": {
     "build": "sh proto/build.sh",

@@ -1,4 +1,4 @@
-## GRPC Tutorial
+# GRPC Tutorial
 
 ## GRPC (Google Remote Procedure Call)
 

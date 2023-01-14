@@ -1,7 +1,7 @@
 {
-	"name": "grpc-tutorial",
+	"name": "node-grpc",
 	"version": "1.0.0",
-	"main": "dist/server/sever.js",
+	"main": "sever.js",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/google-protobuf": "^3.7.4",
@@ -15,7 +15,7 @@
 		"google-protobuf": "^3.21.2"
 	},
 	"scripts": {
-		"server": "DEBUG=* ts-node server.ts",
+		"server": "ts-node server.ts",
 		"create:cstream": "ts-node src/handlers/client/createClientStreaming.ts",
 		"create:sstream": "ts-node src/handlers/client/clientServerStreaming.ts",
 		"create:bstream": "ts-node src/handlers/client/createBidirectionalStreaming.ts",

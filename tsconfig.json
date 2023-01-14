@@ -16,6 +16,5 @@
 		"noUnusedParameters": false,
 		"typeRoots": ["./node_modules/@types"]
 	},
-	"include": ["server/**/*.ts", "src/handlers/client/**/*.ts", "server.ts", "client.ts", "src/handlers/server/index.ts"],
 	"exclude": ["./node_modules", "./dist"]
 }

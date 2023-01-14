@@ -1,21 +1,21 @@
 {
-  "compilerOptions": {
-    "outDir": "dist",
-    "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "downlevelIteration": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "noEmitOnError": true,
-    "sourceMap": true,
-    "noImplicitAny": false,
-    "strict": false,
-    "alwaysStrict": false,
-    "noUnusedParameters": false,
-    "typeRoots": ["./node_modules/@types"]
-  },
-  "include": ["server/**/*.ts", "client/**/*.ts"],
-  "exclude": ["./node_modules", "./dist"]
+	"compilerOptions": {
+		"outDir": "dist",
+		"target": "ESNext",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"downlevelIteration": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"noEmitOnError": true,
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"strict": false,
+		"alwaysStrict": false,
+		"noUnusedParameters": false,
+		"typeRoots": ["./node_modules/@types"]
+	},
+	"include": ["server/**/*.ts", "src/handlers/client/**/*.ts", "server.ts", "client.ts", "src/handlers/server/index.ts"],
+	"exclude": ["./node_modules", "./dist"]
 }

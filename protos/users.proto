@@ -1,29 +1,26 @@
 syntax = "proto3";
-
 package users;
 
 service Users {
-    rpc CreateUser(stream User) returns (Empty) {}
-    rpc GetUsers(Empty) returns (stream User) {};
-    rpc GetUser(UserId) returns (User) {};
-    rpc DeleteUser(UserId) returns (UserList) {};
-    rpc UpdateUser(User) returns (User) {};
-    rpc GetNewUsers(Empty) returns (UserList) {};
-    rpc CreateNewUser(User) returns (User) {}
-}
-
-message User {
-    int32 id = 1;
-    string name = 2;
-    int32 age = 3;
-}
-
-message UserId {
-    int32 id = 1;
-}
-
-message UserList {
-    repeated User users = 1;
+  rpc CreateUnary(User) returns (Response) {}
+  rpc CreateClientStreaming(stream User) returns (Response) {}
+  rpc CreateServerStreaming(User) returns (stream Response) {};
+  rpc CreateBidirectionalStreaming(stream User) returns (stream Response) {};
 }
 
 message Empty {}
+
+message UserId { int32 id = 1; }
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  int32 age = 3;
+}
+
+message UserList { repeated User users = 1; }
+
+message Response {
+  int32 stat_code = 1;
+  string stat_msg = 2;
+}

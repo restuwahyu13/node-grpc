@@ -1,31 +1,16 @@
-INPUT_DIR := ${realpath protos}
-OUTPUT_DIR := ${realpath typedefs}
-FIND_FILE := ${wildcard ${OUTPUT_DIR}/*.ts}
-PROTOC_GEN_GRPC := protoc-gen-grpc
-
 ###########################################################
 ####=======================================================
-#### GENERATE PROTO FILE FOR LINUX/MAC OR WINDOWS FOR grpc
+#### GENERATE PROTO  FOR GRPC
 ####=======================================================
 ###########################################################
+OUTPUT_DIR := ${realpath src/stubs}
 
-protocgen:
-ifneq (${FIND_FILE}, )
-#remove old all files typedefs
-	rm ${OUTPUT_DIR}/**.{ts,js}
-
-#generate typedefs protofile
-	${PROTOC_GEN_GRPC} \
+.PHONY: protoc-gen-js,proto-gen-ts
+protoc-gen-js:
+	protoc-gen-grpc --proto_path= ./protos/*.proto \
 	--js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
-	--grpc_out=${OUTPUT_DIR} \
-	--ts_out=protoc-gen-grpc-ts:${OUTPUT_DIR} \
-	--proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
+	--grpc_out=grpc_js:${OUTPUT_DIR}
 
-else
-#generate typedefs protofile
-	${PROTOC_GEN_GRPC} \
-	--js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
-	--grpc_out=${OUTPUT_DIR} \
-	--ts_out=protoc-gen-grpc-ts:${OUTPUT_DIR} \
-	--proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
-endif
+protoc-gen-ts:
+	protoc-gen-grpc-ts --proto_path= ./protos/*.proto \
+	--ts_out=grpc_js:${OUTPUT_DIR}

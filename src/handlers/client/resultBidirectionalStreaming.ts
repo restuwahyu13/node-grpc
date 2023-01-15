@@ -1,20 +1,18 @@
 import { ClientDuplexStream } from '@grpc/grpc-js'
-import { Response, User } from '../../stubs/protos/users_pb'
+import { User, UserId } from '../../stubs/protos/users_pb'
 import { client } from '../../../client'
 
-const stream: ClientDuplexStream<User, Response> = client.createBidirectionalStreaming()
+const stream: ClientDuplexStream<UserId, User> = client.resultBidirectionalStreaming()
 
 //  get response from server, after server received data from client
-stream.on('data', (res: Response) => {
+stream.on('data', (res: User) => {
 	console.log(res.toObject())
 })
 
 // set request from sending data into server from client
-const reqBody = new User()
-reqBody.setId(1)
-reqBody.setName('jane doe')
-reqBody.setAge(28)
+const reqParams = new UserId()
+reqParams.setId(1)
 
 // send data from client into server
-stream.write(reqBody)
+stream.write(reqParams)
 stream.end()

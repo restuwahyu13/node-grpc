@@ -16,9 +16,15 @@
 	},
 	"scripts": {
 		"server": "ts-node server.ts",
+		"create:unary": "ts-node src/handlers/client/createUnary.ts",
 		"create:cstream": "ts-node src/handlers/client/createClientStreaming.ts",
 		"create:sstream": "ts-node src/handlers/client/clientServerStreaming.ts",
 		"create:bstream": "ts-node src/handlers/client/createBidirectionalStreaming.ts",
-		"create:unary": "ts-node src/handlers/client/createUnary.ts"
+		"results:unary": "ts-node src/handlers/client/resultsUnary.ts",
+		"results:stream": "ts-node src/handlers/client/resultsServerStreaming.ts",
+		"result:unary": "ts-node src/handlers/client/resultsUnary.ts",
+		"result:cstream": "ts-node src/handlers/client/resultClientStreaming.ts",
+		"result:sstream": "ts-node src/handlers/client/resultServerStreaming.ts",
+		"result:bstream": "ts-node src/handlers/client/resultBidirectionalStreaming.ts"
 	}
 }

@@ -10,6 +10,6 @@ reqBody.setAge(24)
 
 //  send request data into server from client and get response back from server after server received data from client
 const stream: ClientReadableStream<Response> = client.createServerStreaming(reqBody)
-stream.on('data', (response: Response): void => {
-	console.log(response.toObject())
+stream.on('data', (res: Response): void => {
+	console.log(res.toObject())
 })

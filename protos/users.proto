@@ -6,6 +6,13 @@ service Users {
   rpc CreateClientStreaming(stream User) returns (Response) {}
   rpc CreateServerStreaming(User) returns (stream Response) {};
   rpc CreateBidirectionalStreaming(stream User) returns (stream Response) {};
+
+  rpc ResultsUnary(Empty) returns (UserList) {};
+  rpc ResultsServerStreaming(Empty) returns (stream UserList) {};
+  rpc ResultUnary(UserId) returns (User) {};
+  rpc ResultClientStreaming(stream UserId) returns (User) {};
+  rpc ResultServerStreaming(UserId) returns (stream User) {};
+  rpc ResultBidirectionalStreaming(stream UserId) returns (stream User) {};
 }
 
 message Empty {}

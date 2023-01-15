@@ -10,7 +10,7 @@ adalah sebuah framework rpc yang dibuat oleh google tepatnya pada tahun 2015 dan
 adalah formating data open source yang digunakan untuk membuat serialisasi data, yang dimana anda sendiri dapat menentukan struktur data yang anda inginkan hanya dalam 1x tulis dan bisa digunakan di berbagai bahasa pemerograman jenis apapun, protocol buffer sendiri memiliki ukururan size yang jauh lebih kecil dari json dan juga lebih cepat dari pada json, info lebih detail terkait protobuf bisa cek [disini](https://developers.google.com/protocol-buffers).
 
 + **syntax** digunakan untuk menentukan format protocol buffer yang akan digunakan untuk menulis schema, format support yang bisa digunakan ada proto2 versi lama dan versi baru proto3
-+ **package** digunakan sebagai unique identifikasi schema untuk menghindari duplikasi schema yang sama, ketika seseudah digenerate menjadi sebuah file stub
++ **package** digunakan sebagai unique identifikasi schema untuk menghindari duplikasi schema yang sama, ketika sesudah digenerate menjadi sebuah file stub
 + **import** digunakan untuk mengimport ekternal library yang akan di gunakan didalam schema
 + **service** digunakan sebagai namespace untuk mengrouping remote method yang akan digunakan
 + **rpc** digunakan untuk melabelkan remote method
@@ -487,6 +487,55 @@ stream.end()
     stream.end()
   }
   ```
+
+## Transform GRPC Response
+
+jika anda ingin menampilkan data ke format array, anda harus mentransform data tersebut terlebih dahulu, kurang lebih caranya itu seperti ini jika anda menggunakan node.js
+
++ Server Response
+
+```ts
+function transfromRequest({ id, age, name }: User.AsObject): User {
+	const user = new User()
+	user.setId(id)
+	user.setName(name)
+	user.setAge(age)
+
+	return user
+}
+
+const users: User[] = [
+  { id: 1, name: 'Jane Doe', age: 28 }
+	{ id: 2, name: 'John Doe', age: 30 },
+].map(transfromRequest)
+
+export function resultsUnary(call: ServerUnaryCall<Empty, Empty>, callback: sendUnaryData<UserList>): void {
+	// set response and send data into client
+	const setUserList = new UserList()
+	setUserList.setUsersList(users)
+
+	callback(null, setUserList)
+}
+```
+
++ Client Response
+
+```ts
+// get response from server
+client.resultsUnary(new Empty(), (err: ServiceError, response: UserList): void => {
+	if (err) console.error('Error: ', err)
+	console.log(response.toObject().usersList)
+})
+```
+
+## Important Before Use GRPC
+
+1. dibutuhkan fundamental konsep terkait grpc
+2. dibutuhkan fundamental konsep terkait protobuffer
+3. dibutuhkan pengetahuan terkait bahasa pemerograman apa yang akan digunakan
+4. jika grpc server atau client tidak menggunakan remote method yang di daftarkan di protofile, maka yang terjadi adalah client atau server tidak dapat saling mengirim request atau response.
+5. jika grpc server atau client mati, maka yang terjadi adalah client atau server tidak dapat saling mengirim request atau response, dikarenakan server atau client crash.
+6. jika grpc server atau client berbeda port, maka yang terjadi adalah client atau server tidak dapat saling mengirim request dan response, dikarenakan tidak saling terhubung satu sama lain.
 
 ## Example Code
 

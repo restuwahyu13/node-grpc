@@ -1,14 +1,15 @@
 import { User } from '../stubs/protos/users_pb'
 
-export function UserToClass({ id, name, age }: User.AsObject) {
+function transfromRequest({ id, age, name }: User.AsObject): User {
 	const user = new User()
 	user.setId(id)
 	user.setName(name)
 	user.setAge(age)
+
 	return user
 }
 
 export const users: User[] = [
-	{ id: 1, name: 'John Doe', age: 25 },
-	{ id: 2, name: 'Jane Doe', age: 28 }
-].map(UserToClass)
+	{ id: 1, name: 'Jane Doe', age: 28 },
+	{ id: 2, name: 'John Doe', age: 30 }
+].map(transfromRequest)
